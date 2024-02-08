@@ -1,0 +1,55 @@
+% load the data
+load('gmmdata.mat');
+%distribution model  ∑Jj=1N(μj,Σj)Pj
+
+
+% Experiment with different numbers of components (J)
+J_values = [2, 3, 4];
+
+for J = J_values
+    fprintf('Running EM with %d components\n', J);
+    [mu, Sigma, P] = em_gmm(data, J);
+
+    % Visualize the results
+    visualize_results(J, mu, Sigma, data);
+end  
+% Update the variables for the next iteration
+  mu = newmu;
+  Sigma = newSigma;
+  P = newP;
+  iterInd = iterInd + 1;
+end
+% Visualise the final result
+visualise_data(J, mu, Sigma, data)
+
+end
+ % Calculate P(j | xk; Θ(t)) for component j and data point xk
+ % Calculate the likelihood p(x_k) for a multivariate Gaussian mixture model
+
+    J = numel(P); % Number of mixture components
+    likelihood = 0;
+
+    for j = 1:J
+        % Compute the PDF of component j for data point x_k
+        pdf_j = mvnpdf(xk, mu(:, j)', Sigma(:, :, j));
+
+        % Add the contribution of component j to the overall likelihood
+        likelihood = likelihood + P(j) * pdf_j;
+    end
+end
+    % Compute the likelihood p(xk | j; θ(t)) for component j and data point xk
+    likelihood = mvnpdf(xk', mu(:, j)', Sigma(:, :, j));
+
+    % Compute the posterior probability using Bayes' rule
+    % P(j | xk; Θ(t)) = (P(j) * p(xk | j; θ(t))) / Σ(i=1 to J)[P(i) * p(xk | i; θ(t))]
+    denominator = 0;
+    for i = 1:J
+        denominator = denominator + P(i) * mvnpdf(xk', mu(:, i)', Sigma(:, :, i));
+    end
+
+    r = (P(j) * likelihood) / denominator;
+end
+% Calculate the likelihood p(x_k | j; Θ(t)) for component j and data point x_k
+    % You can use the multivariate normal PDF function in MATLAB (mvnpdf)
+    % to compute the likelihood. Replace ... with the appropriate code.
+    likelihood = mvnpdf(xk', mu(:, j)', Sigma(:, :, j)); % Calculate likelihood here
