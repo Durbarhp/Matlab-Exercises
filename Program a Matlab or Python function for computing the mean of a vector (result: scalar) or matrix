@@ -1,0 +1,48 @@
+%Mean of a vector
+function mean_vec = calculate_mean(vector)
+    % Check the input vector if empty
+    if isempty(vector)
+        error('Not enough input arguments');
+    end
+    % Initialize the sum variable to 0
+    sum = 0;
+    % for loop to calculate the sum of the elements in the vector
+    for i = 1:length(vector)
+        sum = sum + vector(i);
+    end
+    % Calculate the mean using mean formula
+    mean_vec = sum / length(vector);
+end
+..................................................................
+
+%matrix (result: a row vector containing the means of each column) 
+function matrixmean = calculatemean(matrix)
+%function to calculate mean of a matrix
+% check if the matrix is empty
+if isempty(matrix)
+    error('Not enough Arguments');
+end
+%check if matrix is a vector or a matrix
+if isvector(matrix)
+    %calculate the sum of all elements if vector
+    sum = 0;
+    for i = 1:length(matrix)
+        sum = sum + matrix(i);
+    end
+    %calculate the mean of all elements in the vector
+    matrixmean = sum/length(matrix);
+else
+    %get the number of rows and columns in the matrix
+    [rows,cols] = size(matrix);
+    %initialize a row vector to store the mean of each column
+    matrixmean = zeros(1,cols);
+    %calculate the sum and mean of each column in the matrix
+    for j = 1:cols
+        sum = 0;
+        for i = 1:rows
+            sum = sum + matrix(i,j);
+        end
+        matrixmean(j) = sum/rows;
+    end
+end
+end
